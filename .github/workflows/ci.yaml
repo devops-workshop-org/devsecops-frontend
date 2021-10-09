@@ -8,7 +8,7 @@ jobs:
       
       - name: "Build base image"
         env:
-          DOCKER_TOKEN: ${{ secrets.DDEVOPS }}
+          DOCKER_TOKEN: ${{ secrets.DEVOPS }}
         run: |
           DOCKER_USER=raniakh
           FRONT_IMG_TAG=$(sha256sum package.json | cut -c1-15 )
