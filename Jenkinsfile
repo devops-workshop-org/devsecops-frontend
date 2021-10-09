@@ -16,32 +16,19 @@ pipeline {
         stage ('Preparing base image for front end') {
             steps {
                 sh( returnStdout: false, script: """#!/bin/sh
-                    res=\$(wget -O - --user ${env.DOCKER_USER} --password ${env.DOCKER_TOKEN} ${env.REPO_API_URL}/${env.DOCKER_OWNER} | grep ${env.FRONT_IMG_TAG} )
-                    if [ -z "\$res" ]; then
-                        echo "Did not find image with tag ${env.FRONT_IMG_TAG}"
+                    
+                       
                         docker login -u ${env.DOCKER_USER} -p ${env.DOCKER_TOKEN}
-                        docker build -f Dockerfile -t ${env.DOCKER_OWNER}:${env.FRONT_IMG_TAG} .
-                        docker push ${env.DOCKER_OWNER}:${env.FRONT_IMG_TAG}
-                    else
-                        echo "Found image with tag ${env.FRONT_IMG_TAG}"
-                    fi
+                        docker build -f Dockerfile -t ${env.DOCKER_OWNER}/angular-app:${env.BUILD_NUMBER} .
+                        docker push ${env.DOCKER_OWNER}/angular-app:${env.BUILD_NUMBER}
+                        docker tag ${env.DOCKER_OWNER}/angular-app:${env.BUILD_NUMBER} ${env.DOCKER_OWNER}/angular-app:latest
+                        docker push ${env.DOCKER_OWNER}/angular-app:latest
+                    
                     """.stripIndent()
                 )
             }
         }
-        stage ('Front end image build') {
-            steps {
-                sh "docker login -u ${env.DOCKER_USER} -p ${env.DOCKER_TOKEN}"
-                sh "docker pull ${env.DOCKER_OWNER}:${env.FRONT_IMG_TAG}"
-                sh "docker tag ${env.DOCKER_OWNER}:${env.FRONT_IMG_TAG} angular-front-base:latest"
-                sh "docker build --tag ${env.DOCKER_OWNER}:build-${env.BUILD_NUMBER} --file ./angular-app/Dockerfile ./angular-app/"
-                sh "docker push ${env.DOCKER_OWNER}:build-${env.BUILD_NUMBER}"
-                sh "docker tag ${env.DOCKER_OWNER}:build-${env.BUILD_NUMBER} ${env.DOCKER_OWNER}/angular-front:latest"
-                sh "docker push ${env.DOCKER_OWNER}:latest"
-            }
-        }
-     
-    
+       
        
     }
 }
