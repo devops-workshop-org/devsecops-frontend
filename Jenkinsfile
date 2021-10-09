@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage ('Install dependencies') {
             steps {
-                sh 'npm install'
+                sh 'docker build -t my-app:1.0 .'
             }
         }
     }
