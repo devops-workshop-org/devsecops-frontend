@@ -9,14 +9,14 @@ pipeline {
                     script: 'sha256sum package.json | cut -c1-15'
                   ).trim()
         
-        REPO_API_URL = 'https://hub.docker.com/repository/docker/raniakh/repo_v1'
+        REPO_API_URL = 'https://registry.hub.docker.com/v2/repositories'
     }
     
     stages {
         stage ('Preparing base image for front end') {
             steps {
                 sh( returnStdout: false, script: """#!/bin/sh
-                    res=\$(wget -O - --user ${env.DOCKER_USER} --password ${env.DOCKER_TOKEN} ${env.REPO_API_URL}/${env.DOCKER_OWNER}/angular-front-base/tags | grep ${env.FRONT_IMG_TAG} )
+                    res=\$(wget -O - --user ${env.DOCKER_USER} --password ${env.DOCKER_TOKEN} ${env.REPO_API_URL}/${env.DOCKER_OWNER} | grep ${env.FRONT_IMG_TAG} )
                     if [ -z "\$res" ]; then
                         echo "Did not find image with tag ${env.FRONT_IMG_TAG}"
                         docker login -u ${env.DOCKER_USER} -p ${env.DOCKER_TOKEN}
