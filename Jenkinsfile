@@ -5,11 +5,7 @@ pipeline {
         DOCKER_OWNER = 'raniakh'
         DOCKER_USER = 'raniakh'
         DOCKER_TOKEN = credentials('docker-token-raniakh')
-        FRONT_IMG_TAG = sh( returnStdout:true,
-                    script: 'sha256sum package.json | cut -c1-15'
-                  ).trim()
         
-        REPO_API_URL = 'https://registry.hub.docker.com/v2/repositories'
     }
     
     stages {
