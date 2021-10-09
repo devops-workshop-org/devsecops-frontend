@@ -9,7 +9,7 @@ pipeline {
                     script: 'sha256sum package.json | cut -c1-15'
                   ).trim()
         
-        REPO_API_URL = 'https://registry.hub.docker.com/v2/repositories'
+        REPO_API_URL = 'https://hub.docker.com/repository/docker/raniakh/repo_v1'
     }
     
     stages {
