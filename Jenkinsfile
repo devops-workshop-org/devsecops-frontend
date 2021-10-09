@@ -20,7 +20,7 @@ pipeline {
                     if [ -z "\$res" ]; then
                         echo "Did not find image with tag ${env.FRONT_IMG_TAG}"
                         docker login -u ${env.DOCKER_USER} -p ${env.DOCKER_TOKEN}
-                        docker build -f Dockerfile -t ${env.DOCKER_OWNER}:${env.FRONT_IMG_TAG} angular-app/
+                        docker build -f Dockerfile -t ${env.DOCKER_OWNER}:${env.FRONT_IMG_TAG} .
                         docker push ${env.DOCKER_OWNER}:${env.FRONT_IMG_TAG}
                     else
                         echo "Found image with tag ${env.FRONT_IMG_TAG}"
