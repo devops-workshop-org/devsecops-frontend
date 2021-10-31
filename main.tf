@@ -11,7 +11,7 @@ terraform {
 
 # from where to allocate resources
 provider "kubernetes" {
-  config_path    = "~/.kube/config"
+  config_path    = "homme/runner/.kube/config"
   config_context = "kubernetes-admin@kubernetes"
 }
 
