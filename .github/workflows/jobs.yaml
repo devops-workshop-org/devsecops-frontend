@@ -28,7 +28,7 @@ jobs:
           
       - name: "Build and containerize app"
         run: |
-          DOCKER_USER=mdnfiras
+          DOCKER_USER=raniakh
           docker pull $DOCKER_USER/base-front:latest
           docker tag $DOCKER_USER/base-front:latest base-front:latest
           docker build -t front-app .
@@ -43,10 +43,10 @@ jobs:
           docker stop my-app
       - name: "Push containerized app"
         env:
-          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+          DOCKER_TOKEN: ${{ secrets.DEVOPS }}
           GITHUB_RUN_NUMBER: ${{ github.run_number }}
         run: |
-          DOCKER_USER=mdnfiras
+          DOCKER_USER=raniakh
           docker login -u $DOCKER_USER -p $DOCKER_TOKEN
           docker tag front-app $DOCKER_USER/front-app:$GITHUB_RUN_NUMBER
           docker push $DOCKER_USER/front-app:$GITHUB_RUN_NUMBER
