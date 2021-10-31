@@ -1,4 +1,4 @@
-name: ci/cd
+name: project-ci/cd
 on: [push]
 jobs:
 # The CI job
