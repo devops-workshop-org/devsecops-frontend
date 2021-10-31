@@ -64,15 +64,6 @@ jobs:
         env:
           TERRAFORM_TOKEN: ${{ secrets.TERRAFORM_TOKEN }}
         run: |
-          cat << EOF | tee /home/runner/.terraform.d/credentials.tfrc.json > /dev/null
-          {
-            "credentials": {
-              "app.terraform.io": {
-                "token": "$TERRAFORM_TOKEN"
-              }
-            }
-          }
-          EOF
           terraform init
           
       - name: "Terraform plan"
